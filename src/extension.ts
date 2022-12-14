@@ -81,7 +81,7 @@ function createCompletionItem(name: string, description: string): vscode.Complet
 
 function createRegionCompletionItem(position: vscode.Position): vscode.CompletionItem {
 	const completionItem: vscode.CompletionItem = new vscode.CompletionItem("#region", vscode.CompletionItemKind.Class);
-	completionItem.insertText = new vscode.SnippetString(`//#region $1 \n //#endregion`);
+	completionItem.insertText = new vscode.SnippetString(`//#region $1 \n$2\n//#endregion`);
 	completionItem.detail = "Region start";
 	completionItem.range = new vscode.Range(new vscode.Position(position.line, position.character - 1), position);
 	return completionItem;
