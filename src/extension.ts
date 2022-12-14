@@ -16,6 +16,14 @@ export function activate(context: vscode.ExtensionContext) {
 		},
 		" "
 	));
+
+	context.subscriptions.push(vscode.languages.registerCompletionItemProvider(
+		"typescript",
+		{
+			provideCompletionItems: provideRegionCompletionItems
+		},
+		"#"
+	));
 }
 
 // This method is called when your extension is deactivated
@@ -23,6 +31,8 @@ export function deactivate() { }
 
 async function provideInitCompletionItems(document: vscode.TextDocument, position: vscode.Position, token?: vscode.CancellationToken): Promise<vscode.CompletionItem[] | undefined> {
 	// get all text until the `position` and check if it reads `"launches.`
+
+	console.log("position:", position);
 
 	const path: ParsedPath = parse(document.fileName);
 
@@ -45,9 +55,34 @@ async function provideInitCompletionItems(document: vscode.TextDocument, positio
 	return undefined;
 }
 
+async function provideRegionCompletionItems(document: vscode.TextDocument, position: vscode.Position, token?: vscode.CancellationToken): Promise<vscode.CompletionItem[] | undefined> {
+	// get all text until the `position` and check if it reads `"launches.`
+
+	console.log("position:", position);
+
+	const path: ParsedPath = parse(document.fileName);
+
+	const linePrefix = document.lineAt(position).text.substring(0, position.character);
+	const suggestionText: string = `${path.name.charAt(0).toUpperCase()}${path.name.slice(1)}`;
+
+	if (linePrefix.endsWith("#")) {
+		return [createRegionCompletionItem(position)]
+	}
+
+	return undefined;
+}
+
 function createCompletionItem(name: string, description: string): vscode.CompletionItem {
 	const completionItem: vscode.CompletionItem = new vscode.CompletionItem(name, vscode.CompletionItemKind.Class);
 	completionItem.insertText = new vscode.SnippetString(`${name} {\n\t$1\n}`);
 	completionItem.detail = description;
+	return completionItem;
+}
+
+function createRegionCompletionItem(position: vscode.Position): vscode.CompletionItem {
+	const completionItem: vscode.CompletionItem = new vscode.CompletionItem("#region", vscode.CompletionItemKind.Class);
+	completionItem.insertText = new vscode.SnippetString(`//#region $1 \n //#endregion`);
+	completionItem.detail = "Region start";
+	completionItem.range = new vscode.Range(new vscode.Position(position.line, position.character - 1), position);
 	return completionItem;
 }
