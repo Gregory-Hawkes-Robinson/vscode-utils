@@ -1,9 +1,9 @@
-# gwhr README
+# GWHR Utils README
 
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+Adds nice to have typescript convenience methods to vs code.  Such as class/interface/enum name completion based on the file name.  Intellisense shortcuts for #regions and throwing new exceptions.
 
 For example if there is an image subfolder under your extension project workspace:
 
