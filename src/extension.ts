@@ -49,11 +49,14 @@ async function provideInitCompletionItems(document: vscode.TextDocument, positio
 
 
 	if (linePrefix.endsWith("class ")) {
-		return [createCompletionItem(suggestionText, "Name {}"), createClassConstCompletionItem(suggestionText, "const export")];
+		return [
+			createCompletionItem(suggestionText, "Name {}"),
+			createClassConstCompletionItem(suggestionText, "const export")
+		];
 	}
 
 	if (linePrefix.endsWith("interface ")) {
-		return [createCompletionItem(`I${suggestionText}`, "IName {}")];
+		return [createCompletionItem(`I${suggestionText}`, "Name {}")];
 	}
 
 	if (linePrefix.endsWith("enum ")) {
