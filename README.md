@@ -1,4 +1,4 @@
-# gwhr-vscode- README
+# gwhr README
 
 
 ## Features
