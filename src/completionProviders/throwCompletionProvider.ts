@@ -23,7 +23,7 @@ export class ThrowCompletionProvider implements ICompletionProvider {
 
     protected createCompletionItem(): CompletionItem {
         const completionItem: CompletionItem = new CompletionItem("thr", CompletionItemKind.Text);
-        completionItem.insertText = new SnippetString(`throw new $1`);
+        completionItem.insertText = new SnippetString(`throw new `);
         completionItem.detail = "Throw new";
         completionItem.sortText = "a";
         return completionItem;
