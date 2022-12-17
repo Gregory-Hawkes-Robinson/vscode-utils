@@ -3,6 +3,7 @@
 import { parse, ParsedPath } from 'path';
 import * as vscode from 'vscode';
 import classCompletionProvider from './completionProviders/classCompletionProvider';
+import newCompletionProvider from './completionProviders/newCompletionProvider';
 import regionCompletionProvider from './completionProviders/regionCompletionProvider';
 import throwCompletionProvider from './completionProviders/throwCompletionProvider';
 
@@ -15,6 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 	classCompletionProvider.register(context);
 	regionCompletionProvider.register(context);
 	throwCompletionProvider.register(context);
+	newCompletionProvider.register(context);
 }
 
 // This method is called when your extension is deactivated
